@@ -32,6 +32,7 @@ module Control.Monad.Logger
     , runStderrLoggingT
     , runStdoutLoggingT
     , withChannelLogger
+    , mapLoggingTEntries
     , NoLoggingT (..)
 #if WITH_TEMPLATE_HASKELL
     -- * TH logging
@@ -525,3 +526,7 @@ logErrorNS src = logWithoutLoc src LevelError
 
 logOtherNS :: MonadLogger Text m => Text -> LogLevel -> Text -> m ()
 logOtherNS = logWithoutLoc
+
+mapLoggingTEntries :: (l -> l') -> LoggingT l m a -> LoggingT l' m a
+mapLoggingTEntries f (LoggingT g) = LoggingT $ \h -> g (\a b c d -> h a b c (f d))
+{-# INLINE mapLoggingTEntries #-}
