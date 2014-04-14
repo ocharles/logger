@@ -33,6 +33,7 @@ module Control.Monad.Logger
     , runStdoutLoggingT
     , withChannelLogger
     , mapLoggingTEntries
+    , mapLoggingT
     , NoLoggingT (..)
 #if WITH_TEMPLATE_HASKELL
     -- * TH logging
